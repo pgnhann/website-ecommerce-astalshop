@@ -5,6 +5,7 @@ import { FiUser } from 'react-icons/fi';
 import { FaTrash } from 'react-icons/fa';
 import toastr from 'toastr'; 
 import 'toastr/build/toastr.min.css'; 
+import moment from 'moment';
 
 const JournalDetail = () => {
   const { id } = useParams(); 
@@ -148,22 +149,14 @@ const JournalDetail = () => {
 
                 {/* Comment Content */}
                 <div>
-                  {/* Username and Timestamp */}
-                  <div className="flex items-center gap-2">
-                    <h4 className="text-lg font-semibold">{comment.username}</h4>
-                    <span className="text-sm text-gray-500">
-                      | {new Date(comment.created_at).toLocaleDateString(undefined, {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      })}{' '}
-                      at {new Date(comment.created_at).toLocaleTimeString(undefined, {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                      })}
-                    </span>
-                  </div>
-
+                 {/* Username and Timestamp */}
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-lg font-semibold">{comment.username}</h4>
+                      <span className="text-sm text-gray-500">
+                        | {moment(comment.created_at).format('DD/MM/YYYY [at] HH:mm')}
+                      </span>
+                    </div>
+                    
                   {/* Comment Text */}
                   <p className="text-gray-700 mt-2">{comment.content}</p>
                 </div>

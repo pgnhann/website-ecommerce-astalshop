@@ -7,10 +7,12 @@ import "toastr/build/toastr.min.css";
 import Breadcrumbs from "../components/pageprops/breadcrumbs";
 import ProductInfo from "../components/pageprops/prodetails/info";
 import ProductsOnSale from "../components/pageprops/prodetails/onsale";
+import moment from 'moment';
 
 const ProductDetails = () => {
   const location = useLocation();
-  const { item, imagePath, searchQuery } = location.state || {}; // Lấy item và searchQuery từ state
+  const { item, imagePath, searchQuery } = location.state || {}; 
+  console.log("Path", location.state);
 
   const [prevLocation, setPrevLocation] = useState("");
   const [productInfo, setProductInfo] = useState({});
@@ -25,7 +27,7 @@ const ProductDetails = () => {
     const fetchComments = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/products/comments/${location.state.item._id}`
+          `http://localhost:5000/products/comments/${location.state.item.idpro}`
         );
         if (!response.ok) throw new Error("Failed to fetch comments");
         const data = await response.json();
@@ -36,7 +38,7 @@ const ProductDetails = () => {
       }
     };
 
-    if (location.state.item?._id) fetchComments();
+    if (location.state.item?.idpro) fetchComments();
   }, [location]);
 
   const handleAddComment = async () => {
@@ -109,7 +111,7 @@ const ProductDetails = () => {
           <div className="h-full xl:col-span-2 flex items-center justify-center">
             <img
               className="ml-20 object-contain max-w-max scale-125"
-              src={searchQuery ? imagePath : `/${item.img}`} 
+              src={searchQuery ? `/${imagePath}`  : `/${item.img}`} 
               alt={item.namepro || "Product"}
             />
           </div>
@@ -134,8 +136,7 @@ const ProductDetails = () => {
                     <div className="flex items-center gap-2">
                       <h4 className="text-lg font-semibold">{comment.username}</h4>
                       <span className="text-sm text-gray-500">
-                        | {new Date(comment.created_at).toLocaleDateString()}{" "}
-                        at {new Date(comment.created_at).toLocaleTimeString()}
+                        | {moment(comment.created_at).format('DD/MM/YYYY [at] HH:mm')}
                       </span>
                     </div>
                     <p className="text-gray-700 mt-2">{comment.content}</p>

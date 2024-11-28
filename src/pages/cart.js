@@ -124,14 +124,14 @@ const Cart = () => {
                     closeButton: true,
                     timeOut: 1000,
                   };
-                  toastr.success("Coupon applied successfully!");
+                  toastr.success("Voucher applied successfully!");
                 } else {
-                  toastr.error("Invalid coupon.");
+                  toastr.error("Invalid voucher.");
                 }
               }}
               className="w-40 h-10 bg-primeColor text-white hover:bg-black duration-300"
             >
-              Apply Coupon
+              Apply Voucher
             </button>
           </div>
           </div>
